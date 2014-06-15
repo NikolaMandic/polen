@@ -1,0 +1,20 @@
+0;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+check for multiple subregexps
+check for optional ones
+connect last with first allways
+if  left opt merge first left and right as new first
+  if right opt merge last left and right as new last
+     mark new left as optc
+     done
+  if right noopt
+        mark new as nonopt
+        newLast = last right
+        newFirst= merge first left right
+if left noop new first = left first and mark new as nonopt
+   if right opt merge last left and last right as new last
+   done
+   if right noopt new first = left first
+   new last = right last
