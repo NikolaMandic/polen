@@ -1,6 +1,6 @@
 (ns rapp
   (:require [instaparse.core :as insta]
-            [clojure.walk :as w]
+          ;  [clojure.walk :as w]
             [clojurewerkz.titanium.graph :as tg]
             [clojurewerkz.titanium.edges :as te]
             [clojurewerkz.titanium.vertices :as tv]
@@ -376,23 +376,42 @@
                                         ]
                                         (println (str "outer " outer)))
                                 ;v1 v2 remove
-                                  (println (q/query (list e1 e2)
+                                (println "remove")
+                                (printGraph)
+                                
+                                  (println  (q/query (list e1 e2)
                                                     q/in-vertex
                                                     q/map
                                                     q/into-vec!))
+                 
+                                  (println e2)
+                                  (println (transChar e2))
+                                  (println  (q/query (list e1 e2)
+                                                     q/in-vertex
+                                                     q/into-vec!
+                                                     first
+                                                     tv/remove! 
+                                                    )
+                  )
+                                  (println te/removed? e2)
+                  (printGraph)
                                   ;remove edges
-                                  (println (q/query (list e1 e2)
+                                  (println (get (first (q/query (list e1 e2)
                                                     q/in-vertex
                                                     q/--E>
+                                                    q/in-vertex
+                                                    q/map
                                                     q/into-vec!))
+                                                "character"
+))
                                    ;remove e1 e2
                                    ;create new
-                                  (def nw (tv/create! { :cid (cidi) :character "epsilon"}) )
-                                  (connect [v] [nw])
+                                 ; (def nw (tv/create! { :cid (cidi) :character "epsilon"}) )
+                                  ;(connect [v] [nw])
                                   ;connect new with outer
-                                  (connect [nw] (q/query (into [] outSet)
-                                                    q/in-vertex
-                                                    q/into-vec!))
+                                  ;(connect [nw] (q/query (into [] outSet)
+                                ;                    q/in-vertex
+                                 ;                   q/into-vec!))
                                         ;remove outSet
 
                                         ;connect v to it
@@ -400,6 +419,11 @@
                                         ;for each grab outer and map
                                         ;connect v to each outer with ap
                                         ;merge
+;
+;  8   -  16\
+;x 12 -/   - -  20 
+;   
+;
                                )))
                transformJoinState (fn []
                 (println "join States")
@@ -418,7 +442,7 @@
                ]
            ;(reset! start (q/query   (tv/find-by-kv :character "start")
             ;                       (q/first-of!)))
-            ; (println (str "start : "@start))
+             (println (str "start : "@start))
            ;(markTerminals)
            ;(transformOptional (tv/find-by-kv :character "epsilon"))
            ;|star|questionmark
